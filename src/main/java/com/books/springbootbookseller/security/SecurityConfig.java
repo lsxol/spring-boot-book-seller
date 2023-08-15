@@ -1,7 +1,9 @@
 package com.books.springbootbookseller.security;
 
+import com.books.springbootbookseller.model.Role;
 import com.books.springbootbookseller.security.jwt.JwtAuthorizationFilter;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,10 +21,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final CustomUserDetailsService userDetailsService;
+  @Value("${authentication.internal-api-key}")
+  private String internalApiKey;
+
+  @Autowired
+  private CustomUserDetailsService userDetailsService;
 
   @Bean
   public PasswordEncoder passwordEncoder() {
@@ -30,8 +35,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    super.configure(auth);
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception
+  {
+    auth.userDetailsService(userDetailsService)
+        .passwordEncoder(passwordEncoder());
   }
 
   @Override
@@ -42,15 +49,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     http.authorizeRequests()
         .antMatchers("/api/authentication/**").permitAll()
+        .antMatchers("/api/book").permitAll()
+        .antMatchers("/api/purchase-history").permitAll()
+        .antMatchers("/api/book/**").hasRole(Role.ADMIN.name())
+        .antMatchers("/api/internal/**").hasRole(Role.SYSTEM_MANAGER.name())
         .anyRequest().authenticated();
 
-    http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+    http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(internalApiAuthenticationFilter(), JwtAuthorizationFilter.class);
+
   }
 
   @Override
   @Bean(BeanIds.AUTHENTICATION_MANAGER)
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
+  }
+
+  @Bean
+  public InternalApiAuthenticationFilter internalApiAuthenticationFilter() {
+    return new InternalApiAuthenticationFilter(internalApiKey);
   }
 
   @Bean

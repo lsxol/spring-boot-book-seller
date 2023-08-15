@@ -4,6 +4,7 @@ import com.books.springbootbookseller.model.User;
 import com.books.springbootbookseller.service.IUserService;
 import com.books.springbootbookseller.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
+    @Lazy
     private final IUserService userService;
 
     @Override

@@ -1,6 +1,8 @@
 package com.books.springbootbookseller.security;
 
+import com.books.springbootbookseller.model.Role;
 import com.books.springbootbookseller.model.User;
+import com.books.springbootbookseller.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,20 +23,29 @@ public class UserPrincipal implements UserDetails {
   private transient String password;
   private transient User user;
   private Set<GrantedAuthority> authorities;
+  public static UserPrincipal createSuperUser(){
+    Set<GrantedAuthority> authorities = Set.of(SecurityUtils.convertToAuthority(Role.SYSTEM_MANAGER.name()));
+
+    return UserPrincipal.builder()
+        .id(-1L)
+        .username("system-administrator")
+        .authorities(authorities)
+        .build();
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
+    return authorities;
   }
 
   @Override
   public String getPassword() {
-    return null;
+    return password;
   }
 
   @Override
   public String getUsername() {
-    return null;
+    return username;
   }
 
   @Override

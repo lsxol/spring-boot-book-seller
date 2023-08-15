@@ -31,12 +31,14 @@ class JwtProvider implements IJwtProvider {
     String authorities = userPrincipal.getAuthorities().stream()
         .map(GrantedAuthority::getAuthority)
         .collect(Collectors.joining(","));
+
     return Jwts.builder()
         .setSubject(userPrincipal.getUsername())
         .claim("roles", authorities)
         .claim("userId", userPrincipal.getId())
         .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_IN_MS))
-        .signWith(SignatureAlgorithm.HS512, JWT_SECRET).compact();
+        .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
+        .compact();
   }
 
   @Override
