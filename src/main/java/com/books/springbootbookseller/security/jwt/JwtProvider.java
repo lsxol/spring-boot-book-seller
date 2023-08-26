@@ -36,7 +36,7 @@ class JwtProvider implements IJwtProvider {
         .setSubject(userPrincipal.getUsername())
         .claim("roles", authorities)
         .claim("userId", userPrincipal.getId())
-        .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION_IN_MS))
+        .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(JWT_EXPIRATION_IN_MS)))
         .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
         .compact();
   }

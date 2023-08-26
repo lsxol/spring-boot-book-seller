@@ -1,0 +1,11 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+.custom-card {
+  width: 40rem;
+  max-width: 100%;
+  background-color: aliceblue;
+}
+
+.user-icon {
+  font-size: 5rem;
+  color: darkslategray;
+}

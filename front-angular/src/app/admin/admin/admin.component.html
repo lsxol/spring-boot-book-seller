@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="pt-5">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-6">
+            <h3>
+              All Books
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Lp.</th>
+            <th scope="col">Tytuł</th>
+            <th scope="col">Cena</th>
+            <th scope="col">Autor</th>
+            <th scope="col">Data</th>
+            <th scope="col">Czynności</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of bookList; index as ind">
+            <th scope="row">{{ind +1}}</th>
+            <td>{{item.title}}</td>
+            <td>{{item.price}} zł</td>
+            <td>{{item.author}}</td>
+            <td>{{item.createDate | date: 'dd/MM/YYYY'}}</td>
+            <td>
+              <button class="btn btn-primary me-1">Edytuj</button>
+              <button class="btn btn-danger me-1">Usuń</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-book>
+
+</app-book>

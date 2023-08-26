@@ -24,7 +24,7 @@ public class AuthenticationController {
   @Autowired
   private UserService userService;
 
-  @PostMapping("sign-up")
+  @PostMapping("/sign-up")
   public ResponseEntity<?> signUp(@RequestBody User user)
   {
     if (userService.findByUsername(user.getUsername()).isPresent())
@@ -34,7 +34,7 @@ public class AuthenticationController {
     return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
   }
 
-  @PostMapping("sign-in")
+  @PostMapping("/sign-in")
   public ResponseEntity<?> signIn(@RequestBody User user)
   {
     return new ResponseEntity<>(authenticationService.signInAndReturnJwt(user), HttpStatus.OK);

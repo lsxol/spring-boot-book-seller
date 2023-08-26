@@ -1,0 +1,6 @@
+a {
+  color: darkgrey;
+}
+a:hover {
+  color: grey;
+}
