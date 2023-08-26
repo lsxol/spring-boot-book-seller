@@ -1,14 +1,15 @@
 package com.books.springbootbookseller.security.jwt;
 
 import com.books.springbootbookseller.security.UserPrincipal;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
+
+import javax.servlet.http.HttpServletRequest;
 
 public interface IJwtProvider {
 
-  String generateToken(UserPrincipal userPrincipal);
+  String generateToken(UserPrincipal auth);
 
-  Authentication getAuthethication(HttpServletRequest request);
+  Authentication getAuthentication(HttpServletRequest request);
 
   boolean validateToken(HttpServletRequest request);
 }

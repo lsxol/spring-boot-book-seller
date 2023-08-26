@@ -14,16 +14,18 @@ import java.util.Collection;
 import java.util.Set;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class UserPrincipal implements UserDetails {
+
   private Long id;
   private String username;
-  private transient String password;
-  private transient User user;
+  transient private String password;
+  transient private User user;
   private Set<GrantedAuthority> authorities;
-  public static UserPrincipal createSuperUser(){
+
+  public static UserPrincipal createSuperUser() {
     Set<GrantedAuthority> authorities = Set.of(SecurityUtils.convertToAuthority(Role.SYSTEM_MANAGER.name()));
 
     return UserPrincipal.builder()

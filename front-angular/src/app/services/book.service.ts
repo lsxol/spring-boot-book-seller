@@ -21,7 +21,8 @@ export class BookService extends  RequestBaseService{
   }
 
   deleteBook(book: Book): Observable<any> {
-    return this.http.delete(`${API_URL}/${book.id}`, {headers: this.getHeaders});
+    console.log(localStorage['currentUser'])
+    return this.http.delete(`${API_URL}/delete/${book.id}`, {headers: this.getHeaders});
   }
 
   getAllBooks(): Observable<any> {

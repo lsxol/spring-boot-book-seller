@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {User} from "../models/user.model";
 import {AuthenticationService} from "./authentication.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
@@ -15,7 +15,7 @@ export abstract class RequestBaseService {
     });
   }
 
-  get getHeaders(): HttpHeaders{
+  get getHeaders(): HttpHeaders {
     return new HttpHeaders(
       {
         authorization: 'Bearer ' + this.currentUser?.token,

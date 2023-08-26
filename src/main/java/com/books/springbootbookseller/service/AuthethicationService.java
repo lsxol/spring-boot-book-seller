@@ -14,17 +14,22 @@ class AuthethicationService implements IAuthenticationService {
 
   @Autowired
   private AuthenticationManager authenticationManager;
+
   @Autowired
-  private IJwtProvider iJwtProvider;
+  private IJwtProvider jwtProvider;
+
   @Override
-  public User signInAndReturnJwt(User user) {
-    Authentication authentication =
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+  public User signInAndReturnJWT(User signInRequest) {
+    Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(signInRequest.getUsername(), signInRequest.getPassword())
+    );
 
     UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-    String jwt = iJwtProvider.generateToken(userPrincipal);
+    String jwt = jwtProvider.generateToken(userPrincipal);
+
     User signInUser = userPrincipal.getUser();
     signInUser.setToken(jwt);
+
     return signInUser;
   }
 

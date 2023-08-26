@@ -2,7 +2,7 @@ package com.books.springbootbookseller.controller;
 
 import com.books.springbootbookseller.model.User;
 import com.books.springbootbookseller.service.IAuthenticationService;
-import com.books.springbootbookseller.service.UserService;
+import com.books.springbootbookseller.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,21 +22,18 @@ public class AuthenticationController {
   private IAuthenticationService authenticationService;
 
   @Autowired
-  private UserService userService;
+  private IUserService userService;
 
-  @PostMapping("/sign-up")
-  public ResponseEntity<?> signUp(@RequestBody User user)
-  {
-    if (userService.findByUsername(user.getUsername()).isPresent())
-    {
+  @PostMapping("sign-up")
+  public ResponseEntity<?> signUp(@RequestBody User user) {
+    if (userService.findByUsername(user.getUsername()).isPresent()) {
       return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
     return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
   }
 
-  @PostMapping("/sign-in")
-  public ResponseEntity<?> signIn(@RequestBody User user)
-  {
-    return new ResponseEntity<>(authenticationService.signInAndReturnJwt(user), HttpStatus.OK);
+  @PostMapping("sign-in")
+  public ResponseEntity<?> signIn(@RequestBody User user) {
+    return new ResponseEntity<>(authenticationService.signInAndReturnJWT(user), HttpStatus.OK);
   }
 }

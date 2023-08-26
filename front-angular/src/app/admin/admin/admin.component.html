@@ -8,6 +8,9 @@
               All Books
             </h3>
           </div>
+          <div class="col-6 text-end">
+            <button class="btn btn-primary" (click)="createBook()">Dodaj książkę</button>
+          </div>
         </div>
       </div>
       <div class="card-body">
@@ -23,15 +26,15 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of bookList; index as ind">
-            <th scope="row">{{ind +1}}</th>
+          <tr *ngFor="let item of bookList; index as index">
+            <th scope="row">{{index + 1}}</th>
             <td>{{item.title}}</td>
             <td>{{item.price}} zł</td>
             <td>{{item.author}}</td>
             <td>{{item.createDate | date: 'dd/MM/YYYY'}}</td>
             <td>
-              <button class="btn btn-primary me-1">Edytuj</button>
-              <button class="btn btn-danger me-1">Usuń</button>
+              <button class="btn btn-primary me-1" (click)="editBook(item)">Edytuj</button>
+              <button class="btn btn-danger me-1" (click)="deleteBook(item, index)">Usuń</button>
             </td>
           </tr>
           </tbody>
@@ -41,6 +44,5 @@
   </div>
 </div>
 
-<app-book>
 
-</app-book>
+<app-book [book]="selectedBook" (save)="saveBookWatcher($event)"></app-book>
