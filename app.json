@@ -1,8 +1,8 @@
 {
-  "name":"spring-boot-book-seller",
+  "name":"book-seller-daniel-kazmierczak",
   "buildpacks": [
     {
-      "url": "heroku/maven"
+      "url": "heroku/gradle"
     }
   ]
 }
