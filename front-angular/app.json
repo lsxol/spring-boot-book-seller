@@ -1,0 +1,8 @@
+{
+  "name": "book-seller-daniel-kazmierczak-ui",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
