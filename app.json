@@ -1,0 +1,8 @@
+{
+  "name":"spring-boot-book-seller",
+  "buildpacks": [
+    {
+      "url": "heroku/maven"
+    }
+  ]
+}
