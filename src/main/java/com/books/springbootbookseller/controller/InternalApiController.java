@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/internal")
+@RequestMapping("api/internal")
 public class InternalApiController {
 
   private IUserService userService;
